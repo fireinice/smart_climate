@@ -1,0 +1,1 @@
+"""A Smarter Climate Component."""

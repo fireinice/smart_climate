@@ -1,0 +1,8 @@
+{
+    "domain": "smart_climate",
+    "name": "smarter climate",
+    "documentation": "",
+    "requirements": [],
+    "dependencies": ["smartir"],
+    "codeowners": ["@fireinice"]
+}
