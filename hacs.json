@@ -1,5 +1,5 @@
 {
-    "name": "smart_climate",
+    "name": "Smart Climate",
     "homeassistant": "0.115",
     "persistent_directory": "codes",
     "render_readme": true

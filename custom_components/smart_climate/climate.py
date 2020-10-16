@@ -65,7 +65,6 @@ async def async_setup_platform(
 
 
 class SmartClimate(SmartIRClimate):
-        
     def __init__(self, hass, config, device_data):
         super().__init__(hass, config, device_data)
         self._controller_type = device_data.get('controllerType', None)
@@ -161,6 +160,8 @@ class SmartClimate(SmartIRClimate):
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set operation mode."""
+        if self._hvac_mode == hvac_mode:
+            return
         if(self._controller_type == "Stateless"
            and hvac_mode != HVAC_MODE_OFF
            and self._hvac_mode == HVAC_MODE_OFF
