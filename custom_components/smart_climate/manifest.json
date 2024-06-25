@@ -4,5 +4,6 @@
     "documentation": "",
     "requirements": [],
     "dependencies": ["smartir"],
+    "version": "0.0.1",
     "codeowners": ["@fireinice"]
 }

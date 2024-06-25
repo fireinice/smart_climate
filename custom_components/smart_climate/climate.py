@@ -52,12 +52,17 @@ async def async_setup_platform(
                           "place the file manually in the proper directory.")
             return
 
-    with open(device_json_path) as j:
-        try:
-            device_data = json.load(j)
-        except Exception:
-            _LOGGER.error("The device Json file is invalid")
-            return
+    def get_devices_data(device_json_path):
+        with open(device_json_path) as j:
+            try:
+                device_data = json.load(j)
+                return device_data
+            except Exception:
+                _LOGGER.error("The device Json file is invalid")
+                return None
+
+    device_data = await hass.async_add_executor_job(
+        get_devices_data, device_json_path)
 
     async_add_entities([SmartClimate(
         hass, config, device_data
@@ -125,7 +130,7 @@ class SmartClimate(SmartIRClimate):
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperatures."""
-        hvac_mode = kwargs.get(ATTR_HVAC_MODE)  
+        hvac_mode = kwargs.get(ATTR_HVAC_MODE)
         temperature = kwargs.get(ATTR_TEMPERATURE)
 
         if self._controller_type == "Stateless" \
@@ -136,7 +141,7 @@ class SmartClimate(SmartIRClimate):
             return
 
         if temperature < self._min_temperature or temperature > self._max_temperature:
-            _LOGGER.warning('The temperature value is out of min/max range') 
+            _LOGGER.warning('The temperature value is out of min/max range')
             return
 
         current_temperature = self._target_temperature
